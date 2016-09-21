@@ -318,7 +318,7 @@ bool App::handleEvent(const Window::Event& ev) {
 			{
 				
 				mouseMotion(ev.mousePos.x, ev.mousePos.y);
-				rot = Mat3f::rotation(rot_axis.normalized(), rotation_angle_)*rot;
+				rot = Mat3f::rotation(rot_axis.normalized(), -rotation_angle_)*rot;
 
 			}
 		}
@@ -352,7 +352,7 @@ Vec3f App::mouseToSphere(int x, int y, int width, int height)
 		//project to sphere
 		d = 1.0;
 	}
-	pos.z = FW::cos((FW_PI / 2.0f)*d);
+	pos.z = -1*FW::cos((FW_PI / 2.0f)*d);
 	pos.normalize();
 	return pos;
 }

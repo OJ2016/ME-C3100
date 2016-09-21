@@ -5,38 +5,40 @@
 
 Student name: Ville Ojaniemi
 Student number: 356385
-Hours spent on requirements (approx.):
-Hours spent on extra credit (approx.):
+Hours spent on requirements (approx.):4h
+Hours spent on extra credit (approx.):6h
 
 # First, some questions about where you come from and how you got started.
 # Your answers in this section will be used to improve the course.
 # They will not be judged or affect your points, but please answer all of them.
 # Keep it short; answering shouldn't take you more than 5-10 minutes.
 
-- What are you studying here at Aalto? (Department, major, minor...?)
+- What are you studying here at Aalto? (Department, major, minor...?) Computer Science
 
-- Which year of your studies is this?
+- Which year of your studies is this? 4th
 
-- Is ME-C3100 a mandatory course for you?
+- Is ME-C3100 a mandatory course for you? no
 
-- Have you had something to do with graphics before? Other studies, personal interests, work?
+- Have you had something to do with graphics before? Other studies, personal interests, work? I've been coding some graphics related things on my own, but mostly in 2D
 
-- Do you remember basic linear algebra? Matrix and vector multiplication, cross product, that sort of thing?
+- Do you remember basic linear algebra? Matrix and vector multiplication, cross product, that sort of thing? no
 
-- How is your overall programming experience? What language are you most comfortable with?
+- How is your overall programming experience? What language are you most comfortable with? I'm fairly experienced, I've been coding(or atleast doing something like it) since I was 10. I have been using Java based languages(Processing, Scala) a lot and thus like those. Also C is familiar.
 
 - Do you have some experience with these things? (If not, do you have experience with something similar such as C or Direct3D?)
-C++:
-C++11:
-OpenGL:
+C++: some experience
+C++11: if this is different from above then no.
+OpenGL: a bit mostly 2D drawing.
 
-- Have you used a version control system such as Git, Mercurial or Subversion? Which ones?
+Also I've been coding in C.
 
-- Did you go to the technology lecture?
+- Have you used a version control system such as Git, Mercurial or Subversion? Which ones? I've used Git
 
-- Did you go to exercise sessions?
+- Did you go to the technology lecture? we had technology lectre or does this mean the lectures on mondays and wednesdays? if not then no.
 
-- Did you work on the assignment using Aalto computers, your own computers, or both?
+- Did you go to exercise sessions? no
+
+- Did you work on the assignment using Aalto computers, your own computers, or both? own computer
 
 # Which parts of the assignment did you complete? Mark them 'done'.
 # You can also mark non-completed parts as 'attempted' if you spent a fair amount of
@@ -46,24 +48,29 @@ OpenGL:
 (Try to get everything done! Based on previous data, virtually everyone who put in the work and did well in the first two assignments ended up finishing the course, and also reported a high level of satisfaction at the end of the course.)
 
                             opened this file (0p): done
-                         R1 Moving an object (1p): not done
-R2 Generating a simple cone mesh and normals (3p): not done
-  R3 Converting mesh data for OpenGL viewing (3p): not done
-           R4 Loading a large mesh from file (3p): not done
+                         R1 Moving an object (1p): done
+R2 Generating a simple cone mesh and normals (3p): done
+  R3 Converting mesh data for OpenGL viewing (3p): done
+           R4 Loading a large mesh from file (3p): done
 
-# Did you do any extra credit work?
+# Did you do any extra credit work? yes!
+
+improved camera controls, implemented virtual trackball. also zooming done with mousewheel
+smoothed translation, motion animation instead of instant translation. arrow keys pgup pgdn
+
 
 (Describe what you did and, if there was a substantial amount of work involved, how you did it. Also describe how to use/activate your extra features, if they are interactive.)
 
-# Are there any known problems/bugs remaining in your code?
+# Are there any known problems/bugs remaining in your code? no
 
 (Please provide a list of the problems. If possible, describe what you think the cause is, how you have attempted to diagnose or fix the problem, and how you would attempt to diagnose or fix it if you had more time or motivation. This is important: we are more likely to assign partial credit if you help us understand what's going on.)
 
-# Did you collaborate with anyone in the class?
+# Did you collaborate with anyone in the class? no
 
 (Did you help others? Did others help you? Let us know who you talked to, and what sort of help you gave or received.)
 
 # Any other comments you'd like to share about the assignment or the course so far?
+I really like that the lectures explain things. My math is a bit rusty right now but the lectures actually explain things like matrix multiplications etc, which is really great!
 
 (Was the assignment too long? Too hard? Fun or boring? Did you learn something, or was it a total waste of time? Can we do something differently to help you learn? Please be brutally honest; we won't take it personally.)
 
