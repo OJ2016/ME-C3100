@@ -36,6 +36,8 @@ private:
 
 public:
 						App();		// constructor
+						void startMotion(int x, int y);
+						void stopMotion(int x, int y);
 	virtual				~App() {}	// destructor
 
 	virtual bool		handleEvent(const Window::Event& ev);
@@ -47,7 +49,8 @@ private:
 	void				initRendering();
 	void				render();
 	std::vector<Vertex>	loadObjFileModel(std::string filename);
-
+	void				mouseMotion(int x, int y);
+	Vec3f               mouseToSphere(int x, int y, int width, int height);
 	Window				window_;
 	CommonControls		common_ctrl_;
 
@@ -61,10 +64,17 @@ private:
 	std::vector<Vertex>	vertices_;
 
 	float				camera_rotation_angle_;
-
+	float				rotation_angle_;
 	// YOUR CODE HERE (R1)
 	// Add a class member to store the current translation.
 	Vec4f translate;
+	Vec4f smoothTranslate;
+	Vec3f lastmouse;
+	Vec3f rot_axis;
+	Mat3f rot;
+	
+	bool rotating;
+	float camera_distance;
 	// EXTRA:
 	// For animation extra credit you can use the framework's Timer class.
 	// The .start() and .unstart() methods start and stop the timer; when it's

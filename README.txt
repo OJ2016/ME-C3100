@@ -3,8 +3,8 @@
 #
 # Assignment 1: Introduction
 
-Student name:
-Student number:
+Student name: Ville Ojaniemi
+Student number: 356385
 Hours spent on requirements (approx.):
 Hours spent on extra credit (approx.):
 

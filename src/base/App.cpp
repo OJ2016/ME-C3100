@@ -194,6 +194,12 @@ App::App(void)
 
 	window_.setSize( Vec2i(800, 800) );
 	translate = Vec4f(0,0,0,1);
+	smoothTranslate = Vec4f(0, 0, 0, 1);
+	//lastmouse = Vec3f(0, 1, 0);
+	//rot_axis = Vec3f(1, 0, 0);
+	rot = Mat3f();
+	camera_distance = 2.1f;
+	rotating = false;
 }
 
 bool App::handleEvent(const Window::Event& ev) {
@@ -243,33 +249,81 @@ bool App::handleEvent(const Window::Event& ev) {
 		// Look in framework/gui/Keys.hpp for more key codes.
 		// Visual Studio tip: you can right-click an identifier like FW_KEY_HOME
 		// and "Go to definition" to jump directly to where the identifier is defined.
-			if (ev.key == FW_KEY_HOME)
-				camera_rotation_angle_ -= 0.05 * FW_PI;
-			else if (ev.key == FW_KEY_END)
-				camera_rotation_angle_ += 0.05 * FW_PI;
-			else if (ev.key == FW_KEY_UP)
-				translate[1] += 0.01;
-			else if (ev.key == FW_KEY_DOWN)
-				translate[1] -= 0.01;
-			else if (ev.key == FW_KEY_LEFT)
-				translate[0] -= 0.01;
-			else if (ev.key == FW_KEY_RIGHT)
-				translate[0] += 0.01;
-			else if (ev.key == FW_KEY_PAGE_UP)
-				translate[2] += 0.01;
-			else if (ev.key == FW_KEY_PAGE_DOWN)
-				translate[2] -= 0.01;
+		if (ev.key == FW_KEY_HOME)
+			camera_rotation_angle_ -= 0.05 * FW_PI;
+		else if (ev.key == FW_KEY_END)
+			camera_rotation_angle_ += 0.05 * FW_PI;
+		else if (ev.key == FW_KEY_UP)
+			translate[1] += 0.5;
+		else if (ev.key == FW_KEY_DOWN)
+			translate[1] -= 0.5;
+		else if (ev.key == FW_KEY_LEFT)
+			translate[0] -= 0.5;
+		else if (ev.key == FW_KEY_RIGHT)
+			translate[0] += 0.5;
+		else if (ev.key == FW_KEY_PAGE_UP)
+			translate[2] += 0.5;
+		else if (ev.key == FW_KEY_PAGE_DOWN)
+			translate[2] -= 0.5;
+		else if (ev.key == FW_KEY_R)
+		{
+			translate = Vec4f(0, 0, 0, 1);
+			smoothTranslate = Vec4f(0, 0, 0, 1);
+			rot = Mat3f();
+			camera_distance = 2.1f;
+		}
 	}
 	
-	if (ev.type == Window::EventType_KeyUp) {
-	}
+	else if (ev.type == Window::EventType_KeyUp) {
+		if (ev.key == FW_KEY_MOUSE_LEFT || ev.key == FW_KEY_MOUSE_RIGHT || ev.key == FW_KEY_MOUSE_MIDDLE)
+		{
+			rotating = false;
+		}
+		else if (ev.key == FW_KEY_WHEEL_DOWN)
+		{
+			camera_distance -= 0.1;
+			if (camera_distance < 0.5)
+			{
+				camera_distance = 0.5;
 
-	if (ev.type == Window::EventType_Mouse) {
+			}
+		}
+		else if (ev.key == FW_KEY_WHEEL_UP)
+		{
+			camera_distance += 0.1;
+			if (camera_distance > 2.5)
+			{
+				camera_distance = 2.5;
+			}
+		}
+
+		
+	}
+	else if (ev.type == Window::EventType_Mouse) {
 		// EXTRA: you can put your mouse controls here.
 		// Event::mouseDelta gives the distance the mouse has moved.
 		// Event::mouseDragging tells whether some mouse buttons are currently down.
 		// If you want to know which ones, you have to keep track of the button down/up events
-		// (e.g. FW_KEY_MOUSE_LEFT).
+		// (e.g. FW_KEY_MOUSE_LEFT).88
+		
+		if(ev.mouseDragging)
+		{
+			if (!rotating)
+			{
+				
+				rotating = true;
+				lastmouse = mouseToSphere(ev.mousePos.x, ev.mousePos.y, 800, 800);
+			}
+			if (rotating)
+			{
+				
+				mouseMotion(ev.mousePos.x, ev.mousePos.y);
+				rot = Mat3f::rotation(rot_axis.normalized(), rotation_angle_)*rot;
+
+			}
+		}
+		
+		
 	}
 
 	if (ev.type == Window::EventType_Close) {
@@ -285,6 +339,37 @@ bool App::handleEvent(const Window::Event& ev) {
 	window_.repaint();
 
 	return false;
+}
+Vec3f App::mouseToSphere(int x, int y, int width, int height)
+{
+	Vec3f pos;
+	pos.x = (2.0f*x - width) / width;
+	pos.y = (height - 2.0f*y) / height;
+	float d = FW::sqrt(pos.x*pos.x + pos.y*pos.y);
+	if (d > 1.0)
+	{
+		//mouse outside of sphere
+		//project to sphere
+		d = 1.0;
+	}
+	pos.z = FW::cos((FW_PI / 2.0f)*d);
+	pos.normalize();
+	return pos;
+}
+void App::mouseMotion(int x, int y)
+{
+	Vec3f npos = mouseToSphere(x, y, 800, 800);
+	Vec3f vecd = npos - lastmouse;
+	if(vecd.lenSqr() > 0)
+	{ 
+	rotation_angle_ =  vecd.length();
+	rot_axis = npos.cross(lastmouse);
+	lastmouse = Vec3f(npos.x, npos.y, npos.z);
+	}
+	else
+	{
+		rotation_angle_ = 0;
+	}
 }
 
 void App::initRendering() {
@@ -385,9 +470,8 @@ void App::render() {
 	// when it starts drawing them.
 
 	// Our camera is aimed at origin, and orbits around origin at fixed distance.
-	static const float camera_distance = 2.1f;	
+		
 	Mat4f C;
-	Mat3f rot = Mat3f::rotation(Vec3f(0, 1, 0), -camera_rotation_angle_);
 	C.setCol(0, Vec4f(rot.getCol(0), 0));
 	C.setCol(1, Vec4f(rot.getCol(1), 0));
 	C.setCol(2, Vec4f(rot.getCol(2), 0));
@@ -416,11 +500,16 @@ void App::render() {
 	
 	// YOUR CODE HERE (R1)
 	// Set the model space -> world space transform to translate the model according to user input.
-	Mat4f modelToWorld;
+	Mat4f modelToWorld = Mat4f();
 	modelToWorld.setCol(0, Vec4f(1, 0, 0, 0));
 	modelToWorld.setCol(1, Vec4f(0, 1, 0, 0));
 	modelToWorld.setCol(2, Vec4f(0, 0, 1, 0));
-	modelToWorld.setCol(3, translate);
+	
+	smoothTranslate = (smoothTranslate * 199 + translate) / 200;
+	
+	modelToWorld.setCol(3, smoothTranslate);
+
+
 	// Draw the model with your model-to-world transformation.
 	glUniformMatrix4fv(gl_.model_to_world_uniform, 1, GL_FALSE, modelToWorld.getPtr());
 	glBindVertexArray(gl_.dynamic_vao);
