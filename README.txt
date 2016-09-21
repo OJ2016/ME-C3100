@@ -57,7 +57,7 @@ R2 Generating a simple cone mesh and normals (3p): done
 
 improved camera controls, implemented virtual trackball. also zooming done with mousewheel
 smoothed translation, motion animation instead of instant translation. arrow keys pgup pgdn
-
+Git version control
 
 (Describe what you did and, if there was a substantial amount of work involved, how you did it. Also describe how to use/activate your extra features, if they are interactive.)
 
