@@ -34,7 +34,7 @@ Also I've been coding in C.
 
 - Have you used a version control system such as Git, Mercurial or Subversion? Which ones? I've used Git
 
-- Did you go to the technology lecture? we had technology lectre or does this mean the lectures on mondays and wednesdays? if not then no.
+- Did you go to the technology lecture? we had technology lecture? Or does this mean the lectures on mondays and wednesdays? if not then no.
 
 - Did you go to exercise sessions? no
 
